@@ -1,0 +1,6 @@
+packages:
+  # Inclusions
+  - 'src/**'
+
+  # Exclusions
+  - '!**/test/**'
