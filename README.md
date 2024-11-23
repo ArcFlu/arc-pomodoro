@@ -47,8 +47,7 @@ Before you start, make sure you have the following installed:
    ```
 
 ---
-
-## Development Checklist ✅
+## Getting Started 🚀
 
 ### Step 1: Initial Setup
 - [ ] Fork and clone the repository.
@@ -60,25 +59,55 @@ Before you start, make sure you have the following installed:
 - [ ] Explore the `src/app` folder to understand how routing works in Next.js.
 - [ ] Review the `package.json` file for the list of dependencies.
 
-### Step 3: Add Functionality
-- [ ] Add a button below the "Pomodoro Timer" text with the label "Start".
-- [ ] Create a `useState` hook to track whether the timer is running.
-- [ ] Toggle the text of the button between "Start" and "Stop" when clicked.
-
-### Step 4: Styling
-- [ ] Style the "Pomodoro Timer" component with a border and some padding.
-
-### Step 5: Display Timer
-- [ ] Use a `useState` hook to track time (e.g., 25 minutes).
-- [ ] Display the countdown timer (e.g., `25:00`) inside the "Pomodoro Timer" component.
-- [ ] Implement a `setInterval` to decrease the time every second.
-
-### Step 6: Enhance Features
-- [ ] Add functionality to pause the timer when "Stop" is clicked.
-- [ ] Reset the timer to 25 minutes after completing a session.
-- [ ] Add a sound alert when the timer reaches 0.
-
 ---
+
+## Feature Checklist ✅
+
+### Landing Page Features
+
+- [ ] **Layout:**  
+  Design a simple layout with a brief Arc-Pomodoro description.
+
+- [ ] **CTA Button:**  
+  Add a CTA button linking to the timer page.
+
+- [ ] **Hero Section:**  
+  Add a hero section with a title like "Boost Your Productivity".
+
+- [ ] **Key Features:**  
+  List key features (e.g., "Track focus", "Stay on task").
+
+- [ ] **Image/Illustration:**  
+  Add an image or illustration of the timer.
+
+- [ ] **Footer:**  
+  Include a footer with basic links (e.g., About, Contact).
+
+
+### Pomodoro Timer Page Features
+
+- [ ] **Timer Display:**  
+  Display a countdown timer (e.g., 25:00).
+
+- [ ] **Start Button:**  
+  Add a "Start" button below the timer.
+
+- [ ] **Timer State:**  
+  Use `useState` to manage timer state.
+
+- [ ] **Toggle Button Text:**  
+  Toggle button text between "Start" and "Stop".
+
+- [ ] **Timer Update:**  
+  Use `setInterval` to update the timer every second.
+
+- [ ] **Pause & Reset:**  
+  Add pause and reset functionality.
+
+- [ ] **Sound:**  
+  Play a sound when the timer hits 0.
+
+
 
 ## Recommended VSCode Plugins
 
