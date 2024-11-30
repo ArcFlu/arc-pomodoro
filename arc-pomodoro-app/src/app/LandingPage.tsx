@@ -22,7 +22,7 @@ const AuthBlock: React.FC = () => {
       )}
       {session && (
         <>
-          Signed in as {JSON.stringify(session.user)} <br />
+          Signed in as {JSON.stringify(session)} <br />
           <button onClick={() => signOut()}>Sign out</button>
         </>
       )}
