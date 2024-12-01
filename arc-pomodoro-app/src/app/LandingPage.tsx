@@ -11,19 +11,13 @@ const AuthBlock: React.FC = () => {
       {!session && (
         <>
           Not signed in <br />
-          <button
-            onClick={() =>
-              signIn('github', { callbackUrl: 'http://localhost:3000/' })
-            }
-          >
-            Sign in
-          </button>
+          <Button onClick={() => signIn('github')}>Sign in with Github</Button>
         </>
       )}
       {session && (
         <>
           Signed in as {JSON.stringify(session)} <br />
-          <button onClick={() => signOut()}>Sign out</button>
+          <Button onClick={() => signOut()}>Sign out</Button>
         </>
       )}
     </>
