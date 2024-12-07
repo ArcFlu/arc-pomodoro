@@ -5,7 +5,7 @@ import { FieldNumberInput } from '@/components/src/mui-treasury/field-number-inp
 import { NumberInputEventType } from '@/components/src/mui-treasury/use-number-input';
 
 //Initial Value on Controls drop down and Timer side.
-const initTimerValue = 10;
+const initTimerValue = 1;
 
 const TimerAndControlsSection: React.FC = () => {
   const [isCountingDown, setIsCountingDown] = useState(false);
@@ -34,12 +34,9 @@ const TimerAndControlsSection: React.FC = () => {
           const incrementCount = prev + 1;
           return incrementCount;
         });
-        console.log('Count Success inside useEffect: ' + countSuccess);
       }
     }
   }, [isCountingDown]);
-
-  console.log('Count Success outside, on every render: ' + countSuccess);
 
   const handleInputFieldTimerChange = (value: number | undefined) => {
     if (!value) return;
@@ -113,6 +110,8 @@ const TimerAndControlsSection: React.FC = () => {
           >
             Countdown: {timer}
           </h1>
+          <h2>Success: {countSuccess}</h2>
+          <h2>Fail: {countFail}</h2>
         </Stack>
       </Paper>
     );
