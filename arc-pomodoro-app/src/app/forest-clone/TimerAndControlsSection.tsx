@@ -4,15 +4,12 @@ import { TextField, Paper, Stack, Button } from '@mui/material';
 import { FieldNumberInput } from '@/components/src/mui-treasury/field-number-input';
 import { NumberInputEventType } from '@/components/src/mui-treasury/use-number-input';
 
-//Initial Value on Controls drop down and Timer side.
-const initTimerValue = 1;
+const initTimerValue = 10;
 
 const TimerAndControlsSection: React.FC = () => {
   const [isCountingDown, setIsCountingDown] = useState(false);
   const [timer, setTimer] = useState(initTimerValue);
   const [inputFieldTimer, setInputFieldTimer] = useState(initTimerValue);
-  const [countSuccess, setCountSuccess] = useState(0); // why were these initialized to 1 instead of 0?
-  const [countFail, setCountFail] = useState(0);
 
   useEffect(() => {
     if (isCountingDown) {
@@ -27,31 +24,14 @@ const TimerAndControlsSection: React.FC = () => {
           }
         });
       }, 1000);
-      return () => clearInterval(interval);
-    } else {
-      if (timer === 0) {
-        setCountSuccess((prev) => {
-          const incrementCount = prev + 1;
-          return incrementCount;
-        });
-      }
+
+      return () => clearInterval(interval); // Clean up the interval on unmount or dependency change
     }
   }, [isCountingDown]);
 
   const handleInputFieldTimerChange = (value: number | undefined) => {
     if (!value) return;
     setInputFieldTimer(value);
-  };
-
-  const handleStopClick = () => {
-    console.log(timer);
-    if (timer > 0 && isCountingDown) {
-      setCountFail((prev) => {
-        return prev + 1;
-      });
-      console.log('CountFail: ' + countFail);
-    }
-    setIsCountingDown(false);
   };
 
   const getControlsSection = () => {
@@ -78,16 +58,17 @@ const TimerAndControlsSection: React.FC = () => {
             </Button>
           </Stack>
           <Stack gap={2} direction={'row'}>
-            <Button variant='outlined' color='error' onClick={handleStopClick}>
+            <Button
+              variant='outlined'
+              color='error'
+              onClick={() => setIsCountingDown(false)}
+            >
               Stop
             </Button>
             <Button
               variant='contained'
               color='success'
-              onClick={() => {
-                setIsCountingDown(true);
-                setTimer(inputFieldTimer);
-              }}
+              onClick={() => setIsCountingDown(true)}
             >
               Start
             </Button>
@@ -113,8 +94,6 @@ const TimerAndControlsSection: React.FC = () => {
           >
             Countdown: {timer}
           </h1>
-          <h2>Success: {countSuccess}</h2>
-          <h2>Fail: {countFail}</h2>
         </Stack>
       </Paper>
     );
