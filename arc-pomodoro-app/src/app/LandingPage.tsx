@@ -2,6 +2,7 @@
 import ToggleModeButton from '@/components/ui/ToggleModeButton';
 import { Button } from '@mui/material';
 import { signIn, signOut, useSession } from 'next-auth/react';
+import { redirect } from 'next/navigation';
 
 const AuthBlock: React.FC = () => {
   const { data: session } = useSession();
@@ -34,12 +35,12 @@ const LandingPage = () => {
       <main className='mt-10 flex flex-col items-center space-y-6'>
         <p className='text-lg'>This is a simple homepage.</p>
         <ToggleModeButton />
-        <Button> redirect to the pomodoro page</Button>
+        <Button onClick={()=>redirect('/forest-clone')}> redirect to the pomodoro page</Button>
         <p>also not implemented yet</p>
       </main>
 
       <footer className='mt-auto w-full bg-background p-4 text-center'>
-        <p className='text-sm'>bruh moment footer type beat</p>
+        <p className='text-sm'>For questions and concerns, contact our developers at the following email: shivpatel0190@gmail.com</p>
       </footer>
     </div>
   );
