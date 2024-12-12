@@ -68,7 +68,7 @@ Before you start, make sure you have the following installed:
 - [ ] **Layout:**  
   Design a simple layout with a brief Arc-Pomodoro description.
 
-- [ ] **CTA Button:**  
+- [x] **CTA Button:**  
   Add a CTA button linking to the timer page.
 
 - [ ] **Hero Section:**  
@@ -80,7 +80,7 @@ Before you start, make sure you have the following installed:
 - [ ] **Image/Illustration:**  
   Add an image or illustration of the timer.
 
-- [ ] **Footer:**  
+- [x] **Footer:**  
   Include a footer with basic links (e.g., About, Contact).
 
 
