@@ -35,12 +35,17 @@ const LandingPage = () => {
       <main className='mt-10 flex flex-col items-center space-y-6'>
         <p className='text-lg'>This is a simple homepage.</p>
         <ToggleModeButton />
-        <Button onClick={()=>redirect('/forest-clone')}> redirect to the pomodoro page</Button>
-        <p>also not implemented yet</p>
+        <Button onClick={() => redirect('/forest-clone')}>
+          redirect to the pomodoro page
+        </Button>
+        <p>omg yay shiv did it!</p>
       </main>
 
       <footer className='mt-auto w-full bg-background p-4 text-center'>
-        <p className='text-sm'>For questions and concerns, contact our developers at the following email: shivpatel0190@gmail.com</p>
+        <p className='text-sm'>
+          For questions and concerns, contact our developers at the following
+          email: shivpatel0190@gmail.com
+        </p>
       </footer>
     </div>
   );
