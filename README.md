@@ -24,7 +24,7 @@ Before you start, make sure you have the following installed:
 1. Clone the repository:
    
    ```bash
-   git clone https://github.com/your-repo-name/arc-pomodoro.git
+   git clone https://github.com/ArcFlu/arc-pomodoro.git
    cd arc-pomodoro
    ```
 
