@@ -82,6 +82,7 @@ const TimerAndControlsSection: React.FC = () => {
               Stop
             </Button>
             <Button
+              disabled={isCountingDown}
               variant='contained'
               color='success'
               onClick={() => {
