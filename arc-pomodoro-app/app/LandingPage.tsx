@@ -65,8 +65,8 @@ const AuthBlock: React.FC = () => {
 
 const LandingPage = () => {
   return (
-    <div className='text-text flex min-h-screen flex-col items-center justify-center bg-background'>
-      <header className='w-full bg-background p-4 text-center shadow-md'>
+    <div className='flex min-h-screen flex-col items-center justify-center bg-background'>
+      <header className='w-full p-4 text-center shadow-md'>
         <h1 className='text-3xl font-bold'>Welcome to Arc-Pomodoro</h1>
       </header>
 
@@ -76,13 +76,13 @@ const LandingPage = () => {
           <p className='text-lg'>This is a simple homepage.</p>
           <ToggleModeButton />
           <Button onClick={() => redirect('/arc-timer')}>
-            redirect to the pomodoro page
+            Redirect to the Pomodoro page
           </Button>
           <p>omg yay shiv did it!</p>
         </div>
       </main>
 
-      <footer className='mt-auto w-full bg-background p-4 text-center'>
+      <footer className='mt-auto w-full p-4 text-center'>
         <p className='text-sm'>
           For questions and concerns, contact our developers at the following
           email: shivpatel0190@gmail.com
