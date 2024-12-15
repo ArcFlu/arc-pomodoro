@@ -1,8 +1,10 @@
 'use client';
-import ToggleModeButton from '../components/ui/ToggleModeButton';
-import { Avatar, Button, Card, CardContent, Typography } from '@mui/material';
+import { Card, CardContent } from '@/components/shadcn-ui/card';
+import ToggleModeButton from '../components/custom-ui/ToggleModeButton';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
+import { Avatar, AvatarImage } from '@/components/shadcn-ui/avatar';
+import { Button } from '@/components/shadcn-ui/button';
 
 const AuthBlock: React.FC = () => {
   const { data: session } = useSession();
@@ -19,14 +21,11 @@ const AuthBlock: React.FC = () => {
   if (!session) {
     return (
       <AuthCard>
-        <Typography variant='h5' className='mb-4 text-secondary'>
-          Welcome Back!
-        </Typography>
-        <Typography variant='body1' className='mb-6 text-center text-secondary'>
+        <h2 className='text-secondary'>Welcome Back!</h2>
+        <p className='m-0 text-center text-secondary'>
           Sign in to access your account and start using our awesome features.
-        </Typography>
+        </p>
         <Button
-          variant='contained'
           className='w-full bg-background text-primary hover:bg-secondary'
           onClick={() => signIn('github')}
         >
@@ -38,22 +37,15 @@ const AuthBlock: React.FC = () => {
 
   return (
     <AuthCard>
-      <Avatar
-        alt={user?.name || 'User'}
-        src={user?.image || ''}
-        className='mb-4 h-24 w-24 border-2 border-secondary'
-      />
-      <Typography variant='h6' className='text-secondary'>
-        {user?.name || 'Anonymous'}
-      </Typography>
-      <Typography variant='body1' className='text-secondary'>
-        @{user?.userName || 'Unknown'}
-      </Typography>
-      <Typography variant='body2' className='mb-4 text-secondary'>
+      <Avatar className='h-48 w-48'>
+        <AvatarImage alt={user?.name || 'User'} src={user?.image || ''} />
+      </Avatar>
+      <h2 className='text-secondary'>{user?.name || 'Anonymous'}</h2>
+      <p className='text-secondary'>@{user?.userName || 'Unknown'}</p>
+      <p className='mb-2 text-secondary'>
         {user?.email || 'No email provided'}
-      </Typography>
+      </p>
       <Button
-        variant='contained'
         className='w-full bg-background text-primary hover:bg-secondary'
         onClick={() => signOut()}
       >
@@ -70,7 +62,7 @@ const LandingPage = () => {
         <h1 className='text-3xl font-bold'>Welcome to Arc-Pomodoro</h1>
       </header>
 
-      <main className='min-w-screen mt-10 flex flex-row items-center space-x-6'>
+      <div className='min-w-screen mt-10 flex flex-row items-center space-x-6'>
         <AuthBlock />
         <div className='flex flex-col items-center'>
           <p className='text-lg'>This is a simple homepage.</p>
@@ -80,7 +72,7 @@ const LandingPage = () => {
           </Button>
           <p>omg yay shiv did it!</p>
         </div>
-      </main>
+      </div>
 
       <footer className='mt-auto w-full p-4 text-center'>
         <p className='text-sm'>
