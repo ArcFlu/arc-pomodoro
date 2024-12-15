@@ -1,5 +1,5 @@
 'use client';
-import ToggleModeButton from '@/components/ui/ToggleModeButton';
+import ToggleModeButton from '../components/ui/ToggleModeButton';
 import { Button } from '@mui/material';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';

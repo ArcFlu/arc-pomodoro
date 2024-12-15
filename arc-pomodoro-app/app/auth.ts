@@ -1,7 +1,7 @@
-import NextAuth, { type DefaultSession } from 'next-auth';
+import NextAuth from 'next-auth';
 import GitHub from 'next-auth/providers/github';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
-import prisma from '@/lib-server/prisma';
+import prisma from '../lib/prisma';
 
 import 'next-auth';
 import 'next-auth/jwt';
