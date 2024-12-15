@@ -1,10 +1,14 @@
 'use client';
-import { Card, CardContent } from '@/components/shadcn-ui/card';
-import ToggleModeButton from '../components/custom-ui/ToggleModeButton';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
-import { Avatar, AvatarImage } from '@/components/shadcn-ui/avatar';
-import { Button } from '@/components/shadcn-ui/button';
+import {
+  Avatar,
+  AvatarImage,
+  Button,
+  Card,
+  CardContent,
+  ToggleModeButton,
+} from '@/components/index';
 
 const AuthBlock: React.FC = () => {
   const { data: session } = useSession();
