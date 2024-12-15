@@ -17,7 +17,7 @@ const AuthBlock: React.FC = () => {
       )}
       {session && (
         <>
-          Signed in as {JSON.stringify(session)} <br />
+          Signed in as {JSON.stringify(session.user)} <br />
           <Button onClick={() => signOut()}>Sign out</Button>
         </>
       )}
@@ -35,7 +35,7 @@ const LandingPage = () => {
       <main className='mt-10 flex flex-col items-center space-y-6'>
         <p className='text-lg'>This is a simple homepage.</p>
         <ToggleModeButton />
-        <Button onClick={() => redirect('/forest-clone')}>
+        <Button onClick={() => redirect('/arc-timer')}>
           redirect to the pomodoro page
         </Button>
         <p>omg yay shiv did it!</p>
