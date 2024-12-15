@@ -1,8 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { TextField, Paper, Stack, Button } from '@mui/material';
-import { FieldNumberInput } from '@/components/src/mui-treasury/field-number-input';
-import { NumberInputEventType } from '@/components/src/mui-treasury/use-number-input';
+import { Paper, Stack, Button } from '@mui/material';
+import { FieldNumberInput } from '../../components/src/mui-treasury/field-number-input';
 
 //Initial Value on Controls drop down and Timer side.
 const initTimerValue = 1;
