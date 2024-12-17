@@ -3,6 +3,7 @@ import { Button, Card } from '@/components/index';
 import { Stack } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { FieldNumberInput } from '../../components/src/mui-treasury/field-number-input';
+import TimerApiButtons from '@/app/arc-timer/utils/TimerApiButtons';
 
 //Initial Value on Controls drop down and Timer side.
 const initTimerValue = 1;
@@ -112,6 +113,7 @@ const TimerAndControlsSection: React.FC = () => {
           </h1>
           <h2>Success: {countSuccess}</h2>
           <h2>Fail: {countFail}</h2>
+          <TimerApiButtons />
         </Stack>
       </Card>
     );
