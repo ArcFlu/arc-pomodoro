@@ -19,6 +19,8 @@ model User {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  timers Timer[]
 }
 
 model Account {
@@ -60,4 +62,15 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Timer {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  durationInSeconds Int
+  result            Boolean
+
+  createdAt DateTime @default(now())
 }
