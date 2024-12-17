@@ -76,12 +76,6 @@ const TimerAndControlsSection: React.FC = () => {
           </Stack>
           <Stack gap={2} direction={'row'}>
             <Button
-              className='bg-red-500 hover:bg-red-700'
-              onClick={handleStopClick}
-            >
-              Stop
-            </Button>
-            <Button
               disabled={isCountingDown}
               onClick={() => {
                 setIsCountingDown(true);
@@ -90,6 +84,12 @@ const TimerAndControlsSection: React.FC = () => {
               className='bg-green-500 hover:bg-green-700'
             >
               Start
+            </Button>
+            <Button
+              className='bg-red-500 hover:bg-red-700'
+              onClick={handleStopClick}
+            >
+              Stop
             </Button>
           </Stack>
         </Stack>
