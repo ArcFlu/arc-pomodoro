@@ -1,8 +1,8 @@
 'use client';
+import { Button, Card } from '@/components/index';
+import { Stack } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { TextField, Paper, Stack, Button } from '@mui/material';
-import { FieldNumberInput } from '@/components/src/mui-treasury/field-number-input';
-import { NumberInputEventType } from '@/components/src/mui-treasury/use-number-input';
+import { FieldNumberInput } from '../../components/src/mui-treasury/field-number-input';
 
 //Initial Value on Controls drop down and Timer side.
 const initTimerValue = 1;
@@ -56,52 +56,49 @@ const TimerAndControlsSection: React.FC = () => {
 
   const getControlsSection = () => {
     return (
-      <Paper
-        elevation={4}
-        className='flex flex-grow items-start justify-center border-4 border-green-500'
-      >
+      <Card className='flex flex-grow items-start justify-center border-4 border-green-500'>
         <Stack gap={2} className='items-center'>
           <h1 className='pt-2 text-xl text-foreground'>Controls Section</h1>
-          <Stack gap={2} direction={'row'}>
+          <Stack gap={2} direction={'row'} className='flex items-center'>
             <FieldNumberInput
               defaultValue={initTimerValue}
               onChange={handleInputFieldTimerChange}
             />
             <Button
-              variant='contained'
               onClick={() => {
                 setTimer(inputFieldTimer);
                 setIsCountingDown(false);
               }}
+              className='h-full w-1/4 bg-cyan-500 hover:bg-cyan-700'
             >
               Set Timer
             </Button>
           </Stack>
           <Stack gap={2} direction={'row'}>
-            <Button variant='outlined' color='error' onClick={handleStopClick}>
+            <Button
+              className='bg-red-500 hover:bg-red-700'
+              onClick={handleStopClick}
+            >
               Stop
             </Button>
             <Button
-              variant='contained'
-              color='success'
+              disabled={isCountingDown}
               onClick={() => {
                 setIsCountingDown(true);
                 setTimer(inputFieldTimer);
               }}
+              className='bg-green-500 hover:bg-green-700'
             >
               Start
             </Button>
           </Stack>
         </Stack>
-      </Paper>
+      </Card>
     );
   };
   const getTimerSection = () => {
     return (
-      <Paper
-        elevation={4}
-        className='flex flex-grow items-start justify-center border-4 border-red-500'
-      >
+      <Card className='flex flex-grow items-start justify-center border-4 border-red-500'>
         <Stack gap={2} className='items-center'>
           <h1 className='pt-2 text-xl text-foreground'>Timer Section</h1>
           <h1
@@ -116,7 +113,7 @@ const TimerAndControlsSection: React.FC = () => {
           <h2>Success: {countSuccess}</h2>
           <h2>Fail: {countFail}</h2>
         </Stack>
-      </Paper>
+      </Card>
     );
   };
 
