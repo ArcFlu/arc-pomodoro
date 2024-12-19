@@ -7,7 +7,7 @@ export async function GET(request: Request) {
   const currentUserId = session?.user.id;
   const currentUserRecord = await prisma.user.findFirst();
 
-  const query = await prisma.timer.findMany({
+  const query = await prisma.session.findMany({
     where: { userId: currentUserId },
   });
 
