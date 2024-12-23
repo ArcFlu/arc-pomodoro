@@ -3,6 +3,7 @@ import { Button, Card } from '@/components/index';
 import { Stack } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { FieldNumberInput } from '../../components/src/mui-treasury/field-number-input';
+import { redirect } from 'next/navigation';
 
 //Initial Value on Controls drop down and Timer side.
 const initTimerValue = 1;
@@ -90,6 +91,15 @@ const TimerAndControlsSection: React.FC = () => {
               className='bg-green-500 hover:bg-green-700'
             >
               Start
+            </Button>
+            <Button
+              disabled={isCountingDown}
+              onClick={() => {
+                redirect('/pomodoro-mode');
+              }}
+              className='bg-purple-500'
+            >
+              Pomodoro Mode
             </Button>
           </Stack>
         </Stack>
