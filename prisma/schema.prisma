@@ -69,8 +69,10 @@ model Timer {
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  durationInSeconds Int
-  result            Boolean
+  targetDuration Int
+  elapsedTime    Int     @default(0)
+  isCompleted    Boolean @default(false)
 
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

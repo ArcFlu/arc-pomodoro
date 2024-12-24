@@ -1,5 +1,5 @@
 'use server';
-import { GET, POST, TimerPostApiRequest } from '@/app/api/user/route';
+import { GET, POST, TimerPostApiRequest } from '@/app/api/timer/route';
 import { auth } from '@/app/auth';
 
 export const handleGetTimers = async () => {
@@ -7,13 +7,12 @@ export const handleGetTimers = async () => {
   return await response.json();
 };
 
-export const handlePostTimers = async () => {
+export const handlePostTimers = async (targetDuration: number) => {
   const session = await auth();
   const currentUserId = session?.user.id;
   const res: TimerPostApiRequest = {
     timer: {
-      durationInSeconds: 0,
-      result: false,
+      targetDuration,
       user: {
         connect: { id: currentUserId },
       },

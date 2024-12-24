@@ -8,7 +8,7 @@ const onReadClick = async () => {
 };
 
 const onCreateClick = async () => {
-  const res = await handlePostTimers();
+  const res = await handlePostTimers(10);
   console.log(res);
 };
 

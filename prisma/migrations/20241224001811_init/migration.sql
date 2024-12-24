@@ -4,6 +4,7 @@ CREATE TABLE "User" (
     "name" TEXT,
     "userName" TEXT,
     "email" TEXT,
+    "emailVerified" DATETIME,
     "image" TEXT,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" DATETIME NOT NULL
@@ -50,9 +51,11 @@ CREATE TABLE "VerificationToken" (
 CREATE TABLE "Timer" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "userId" TEXT NOT NULL,
-    "durationInSeconds" INTEGER NOT NULL,
-    "result" BOOLEAN NOT NULL,
+    "targetDuration" INTEGER NOT NULL,
+    "elapsedTime" INTEGER NOT NULL,
+    "isCompleted" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL,
     CONSTRAINT "Timer_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE CASCADE ON UPDATE CASCADE
 );
 
