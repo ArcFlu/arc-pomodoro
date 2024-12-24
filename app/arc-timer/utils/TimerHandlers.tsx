@@ -1,5 +1,5 @@
 'use server';
-import { GET, POST, TimerPostApiRequest } from '@/app/api/timer/route';
+import { GET, POST, DELETE, TimerPostApiRequest } from '@/app/api/timer/route';
 import { auth } from '@/app/auth';
 
 export const handleGetTimers = async () => {
@@ -20,4 +20,9 @@ export const handlePostTimers = async (targetDuration: number) => {
   };
   const response = await POST(res);
   return await response.json();
+};
+
+export const handleDeleteTimers = async () => {
+  const response = await DELETE();
+  return;
 };
