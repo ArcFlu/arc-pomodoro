@@ -5,6 +5,16 @@ import Image from 'next/image';
 import { Progress } from '@/components/shadcn-ui/progress';
 import React, { useEffect, useState } from 'react';
 import { redirect } from 'next/navigation';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/shadcn-ui/dialog';
+
+//This is after I commit without installing and adding Dialog dependencies
 
 const PomodoroMode: React.FC = () => {
   const [isCountingDown, setIsCountingDown] = useState(false);
