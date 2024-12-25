@@ -2,7 +2,7 @@ import { auth } from '@/app/auth';
 import prisma from '@/lib/prisma';
 import { Prisma } from '@prisma/client';
 
-export async function GET() {
+export async function GET_TIMERS() {
   const session = await auth();
   const currentUserId = session?.user.id;
 
@@ -16,7 +16,7 @@ export interface TimerPostApiRequest {
   timer: Prisma.TimerCreateInput;
 }
 
-export async function POST(req: TimerPostApiRequest) {
+export async function CREATE_TIMER(req: TimerPostApiRequest) {
   const createdTimer = await prisma.timer.create({
     data: { ...req.timer },
   });
@@ -24,7 +24,7 @@ export async function POST(req: TimerPostApiRequest) {
   return Response.json(createdTimer);
 }
 
-export async function DELETE() {
+export async function DELETE_NUKE() {
   const session = await auth();
   const currentUserId = session?.user.id;
   const result = await prisma.user.update({
