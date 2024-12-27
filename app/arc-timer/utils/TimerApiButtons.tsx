@@ -5,23 +5,36 @@ import {
   handleGetTimers,
   handlePostTimers,
 } from './TimerHandlers';
-
-const onReadClick = async () => {
-  const res = await handleGetTimers();
-  console.log(res);
-};
-
-const onCreateClick = async (targetDuration: number) => {
-  const res = await handlePostTimers(targetDuration);
-  console.log(res);
-};
-
-const onDeleteClick = async () => {
-  await handleDeleteTimers();
-  console.log('delete nuke === bruh moment');
-};
+import { UserTimersContext, UserTimersDispatchContext } from './TimersContext';
+import { useContext } from 'react';
+import { Timer } from '@/types/custom.types';
 
 const TimerApiButtons = () => {
+  const initialTimers = useContext(UserTimersContext);
+  const dispatch = useContext(UserTimersDispatchContext);
+
+  const onReadClick = async () => {
+    const res = await handleGetTimers();
+    console.log(res);
+    console.log('context: ' + initialTimers);
+  };
+
+  const onCreateClick = async (targetDuration: number) => {
+    const res = await handlePostTimers(targetDuration);
+    dispatch({
+      type: 'addUserTimer',
+      newTimer: res as Timer,
+    });
+  };
+
+  const onDeleteClick = async () => {
+    await handleDeleteTimers();
+    dispatch({
+      type: 'initializeUserTimers',
+      userTimers: [],
+    });
+    console.log('delete nuke === bruh moment');
+  };
   return (
     <Stack gap={2} className='items-center border-2 border-purple-500 p-5'>
       <Button className='bg-green-400' onClick={() => onCreateClick(10)}>
