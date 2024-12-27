@@ -1,21 +1,11 @@
 'use client';
 import { Card, ToggleModeButton } from '@/components/index';
-import { handleGetTimers } from './utils/TimerHandlers';
-import { useEffect, useState } from 'react';
-import { Timer } from '../../types/prisma.types';
+import { useContext } from 'react';
 import Stack from '@mui/material/Stack';
+import { UserTimersContext } from './utils/TimersContext';
 
 const DisplayForestStatsSection: React.FC = () => {
-  const [listOfTimers, setListOfTimers] = useState<Timer[]>([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await handleGetTimers();
-      setListOfTimers(res);
-    };
-
-    fetchData();
-  }, []);
+  const listOfTimers = useContext(UserTimersContext);
 
   return (
     <Card className='flex items-start border-4 border-blue-500 p-2'>

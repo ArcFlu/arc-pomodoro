@@ -35,7 +35,7 @@ const PomodoroMode: React.FC = () => {
   const value = 100 - (timer / initTimerValue) * 100;
 
   return (
-    <Card className='flex h-1/2 flex-col items-start items-center justify-center gap-4 border-4 border-blue-500'>
+    <Card className='flex h-1/2 flex-col items-center justify-center gap-4 border-4 border-blue-500'>
       <h3>Pomodoro Zen Mode</h3>
       <Image className='w-20' alt='profile-pic' src={profilePicture} />
       <h3 className='flex w-28 justify-center bg-white p-2.5 text-black'>
