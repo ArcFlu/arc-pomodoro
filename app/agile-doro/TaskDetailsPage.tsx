@@ -1,4 +1,4 @@
-import PomodoroMode from '../arc-timer/Pomodoro-Mode';
+import PomodoroMode from '../pomodoro-mode/PomodoroMode';
 
 const TaskDetailsPage = () => {
   return (
