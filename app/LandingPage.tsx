@@ -74,6 +74,9 @@ const LandingPage = () => {
           <Button onClick={() => redirect('/arc-timer')}>
             Redirect to the Pomodoro page
           </Button>
+          <Button onClick={() => redirect('/agile-doro')}>
+            Redirect to the Agile-Doro page
+          </Button>
           <p>omg yay shiv did it!</p>
         </div>
       </div>
