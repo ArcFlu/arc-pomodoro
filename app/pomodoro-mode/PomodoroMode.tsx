@@ -12,14 +12,15 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogClose,
+  DialogFooter,
 } from '@/components/shadcn-ui/dialog';
-
-//This is after I commit without installing and adding Dialog dependencies
 
 const PomodoroMode: React.FC = () => {
   const [isCountingDown, setIsCountingDown] = useState(false);
   const [timer, setTimer] = useState(300);
   const [initTimerValue, setInitTimerValue] = useState(300);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     if (isCountingDown) {
@@ -30,6 +31,7 @@ const PomodoroMode: React.FC = () => {
           } else {
             clearInterval(interval);
             setIsCountingDown(false);
+            setTimer(initTimerValue);
             return 0;
           }
         });
@@ -39,10 +41,10 @@ const PomodoroMode: React.FC = () => {
   }, [isCountingDown]);
 
   const handleToggle = () => {
-    setIsCountingDown((prev) => !prev);
     if (isCountingDown) {
-      setTimer(initTimerValue);
-      setInitTimerValue(initTimerValue);
+      setOpen(true);
+    } else {
+      setIsCountingDown((prev) => !prev);
     }
   };
 
@@ -55,10 +57,29 @@ const PomodoroMode: React.FC = () => {
     );
   }
 
+  {
+    /*If press Yes to End Timer on the Dialog Box run this */
+  }
+  function endTimer() {
+    setOpen(false);
+    setTimer(initTimerValue);
+    setInitTimerValue(initTimerValue);
+    setIsCountingDown(false);
+  }
+
+  {
+    /*If press No to End Timer on the Dialog Box run this */
+  }
+  function continueTimer() {
+    setOpen(false);
+    setIsCountingDown(true);
+  }
+
   return (
     <Card className='flex h-4/5 flex-col items-start items-center justify-center gap-4 border-4 border-blue-500'>
       <h3>Pomodoro Zen Mode</h3>
       <Image className='w-20' alt='profile-pic' src={profilePicture} />
+      {/* Plus and Minus buttons that set timer length */}
       <div className='flex gap-4'>
         <Button
           disabled={isCountingDown ? true : false}
@@ -75,23 +96,71 @@ const PomodoroMode: React.FC = () => {
           +
         </Button>
       </div>
+
+      {/*White Timer Display */}
       <h3 className='flex w-28 justify-center bg-white px-20 py-7 text-3xl font-thin tracking-wider text-black'>
         {Math.floor(timer / 60)}:
         {timer % 60 < 10 ? '0' + (timer % 60) : timer % 60}
       </h3>
+
+      {/*Progress Bar */}
       <div className='flex flex-col gap-y-4'>
         <Progress className='w-96' value={value} />
         <h2 className='2-xl self-center'>{value.toFixed(2)} %</h2>
       </div>
+
+      {/*Button to start/end timer*/}
       <Button
         className={isCountingDown ? 'bg-red-500' : 'bg-green-500'}
         onClick={handleToggle}
       >
         {isCountingDown ? 'End Timer' : 'Start Timer'}
       </Button>
+
+      {/*Button to go to Break Mode */}
+      <Button
+        disabled={isCountingDown ? true : false}
+        onClick={() => redirect('./break-mode')}
+      >
+        Break Mode
+      </Button>
+
       <Button className='bg-blue-500' onClick={() => redirect('./arc-timer')}>
         Back to Regular
       </Button>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger asChild></DialogTrigger>
+        <DialogContent className='sm:max-w-md'>
+          <DialogHeader>
+            <DialogTitle>Exiting Pomodoro</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to quit Pomodoro Zen Mode?
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <DialogClose className='flex-auto'>
+              <Button
+                type='button'
+                variant='secondary'
+                className='bg-red-500'
+                onClick={endTimer}
+              >
+                Yes
+              </Button>
+            </DialogClose>
+            <DialogClose className='flex-auto'>
+              <Button
+                type='button'
+                variant='secondary'
+                className='bg-gray-500'
+                onClick={continueTimer}
+              >
+                No
+              </Button>
+            </DialogClose>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </Card>
   );
 };
