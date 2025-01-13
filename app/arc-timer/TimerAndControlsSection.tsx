@@ -4,6 +4,7 @@ import { Stack } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { FieldNumberInput } from '../../components/src/mui-treasury/field-number-input';
 import TimerApiButtons from '@/app/arc-timer/utils/TimerApiButtons';
+import { redirect } from 'next/navigation';
 
 //Initial Value on Controls drop down and Timer side.
 const initTimerValue = 1;
@@ -91,6 +92,12 @@ const TimerAndControlsSection: React.FC = () => {
               onClick={handleStopClick}
             >
               Stop
+            </Button>
+            <Button
+              onClick={() => redirect('/pomodoro-mode')}
+              className='h-full w-2/5 bg-purple-500'
+            >
+              Pomodoro Mode
             </Button>
           </Stack>
         </Stack>
