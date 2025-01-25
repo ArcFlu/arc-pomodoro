@@ -3,6 +3,8 @@
 
 Arc-Pomodoro is a Pomodoro web app designed to help users improve their productivity through time management techniques. This project is built with Next.js.
 
+View the deployed app [here](https://arc-pomodoro.vercel.app)!
+
 ---
 
 ## Getting Started 🚀
