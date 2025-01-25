@@ -9,6 +9,7 @@ import {
   CardContent,
   ToggleModeButton,
 } from '@/components/index';
+import { Stack } from '@mui/material';
 
 const AuthBlock: React.FC = () => {
   const { data: session } = useSession();
@@ -71,12 +72,20 @@ const LandingPage = () => {
         <div className='flex flex-col items-center'>
           <p className='text-lg'>This is a simple homepage.</p>
           <ToggleModeButton />
-          <Button onClick={() => redirect('/arc-timer')}>
-            Redirect to the Pomodoro page
-          </Button>
-          <Button onClick={() => redirect('/agile-doro')}>
-            Redirect to the Agile-Doro page
-          </Button>
+          <Stack gap={2}>
+            <Button onClick={() => redirect('/arc-timer')}>
+              Redirect to the ArcTimer page
+            </Button>
+            <Button onClick={() => redirect('/agile-doro')}>
+              Redirect to the Agile-Doro page
+            </Button>
+            <Button
+              onClick={() => redirect('/pomodoro-mode')}
+              className='bg-green-500'
+            >
+              Redirect to the Pomodoro-Zen page
+            </Button>
+          </Stack>
           <p>omg yay shiv did it!</p>
         </div>
       </div>

@@ -119,7 +119,7 @@ const PomodoroMode: React.FC = () => {
   };
 
   return (
-    <Card className='flex h-full flex-col items-start items-center justify-center gap-4 border-4 border-blue-500'>
+    <Card className='inline-flex flex-col items-center justify-center gap-4 border-4 border-blue-500'>
       {!breakMode ? (
         <>
           <h3>Pomodoro Zen Mode</h3>

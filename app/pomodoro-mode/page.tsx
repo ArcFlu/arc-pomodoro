@@ -1,10 +1,13 @@
 import React from 'react';
 import PomodoroMode from './PomodoroMode';
+import PiPMode from './PiPMode';
 
 const Page: React.FC = () => {
   return (
-    <div className='h-screen p-5'>
-      <PomodoroMode />
+    <div className='inline-flex'>
+      <PiPMode>
+        <PomodoroMode />
+      </PiPMode>
     </div>
   );
 };
