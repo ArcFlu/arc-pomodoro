@@ -62,11 +62,6 @@ const PomodoroMode: React.FC = () => {
 
   const [count, setCount] = useState(0);
 
-  {
-    /*useEffect 1: Counts down timer until it hits 0. 
-    If it does, clear interval, change isCountingDown to false
-    and sets the timer to the initial timer value to display it */
-  }
   useEffect(() => {
     if (isCountingDown) {
       const interval = setInterval(() => {
@@ -94,12 +89,6 @@ const PomodoroMode: React.FC = () => {
     }
   }, [isCountingDown]);
 
-  {
-    /*useEffect 2: Counts down break timer until it hits 0. 
-    If it does, clear interval, sets the timer to the initial break 
-    time to display it */
-  }
-
   useEffect(() => {
     if (breakIsCountingDown) {
       const interval = setInterval(() => {
@@ -120,10 +109,6 @@ const PomodoroMode: React.FC = () => {
     }
   }, [breakIsCountingDown]);
 
-  {
-    /*On the Start/End Timer button. If timer is currently counting down, use setOpen to display the dialog box to quit timer or not
-    If not, set isCountingDown to start counting down and thus starting timer.*/
-  }
   const handleToggle = () => {
     if (isCountingDown) {
       setOpen(true);
@@ -132,15 +117,8 @@ const PomodoroMode: React.FC = () => {
     }
   };
 
-  {
-    /*Progress Bar value */
-  }
   let value = 100 - (timer / initTimerValue) * 100;
 
-  {
-    /*On the Dialog screen. If user selects Yes, run this function. This closes the dialog box (setOpen(false)), 
-      sets time on screen to initial value, set the initial timer value back to its initial value and stops counting.*/
-  }
   function endTimer() {
     setOpen(false);
     setTimer(initTimerValue);
@@ -151,9 +129,6 @@ const PomodoroMode: React.FC = () => {
     }
   }
 
-  {
-    /*On the Dialog screen. If user selects No, run this function. This closes the dialog box and keeps the timer running.*/
-  }
   function continueTimer() {
     if (timer == 0) {
       setOpen(false);
@@ -166,11 +141,6 @@ const PomodoroMode: React.FC = () => {
     }
   }
 
-  {
-    {
-      /*if you want original implementation with that bug where if you press yes it sends you back to pomodoro mode change this*/
-    }
-  }
   function endTimerBreak() {
     if (breakTimer == 0) {
       setBreakDisplay(false);
@@ -193,9 +163,6 @@ const PomodoroMode: React.FC = () => {
     setIsCountingDown((prev) => !prev);
   }
 
-  {
-    /*On the Break Dialog screen. If user selects No, run this function. This sets closes the Break Dialog box.*/
-  }
   function continueTimerBreak() {
     if (breakTimer == 0) {
       setBreakDisplay(false);
@@ -208,10 +175,6 @@ const PomodoroMode: React.FC = () => {
     }
   }
 
-  {
-    /*On the Start/End Break Timer button. If timer is currently counting down, use setBreakDisplay to display the dialog box to quit timer or not.
-    If not the timer is not counting down(meaning it hasn't started yet), set isCountingDown to start counting down and thus starting the timer.*/
-  }
   const breakHandleToggle = () => {
     setBreakDisplay(true);
     if (breakTimer == 0) {
@@ -221,18 +184,12 @@ const PomodoroMode: React.FC = () => {
     }
   };
 
-  {
-    /*On the Pomodoro/Break Drop Down. Sets Pomodoro Time*/
-  }
   function pomodoroDuration(time: string) {
     setPosition(time);
     setTimer(Number(time) * 60);
     setInitTimerValue(Number(time) * 60);
   }
 
-  {
-    /*On the Pomodoro/Break Drop Down. Sets Break Time*/
-  }
   function breakDuration(time: string) {
     setBreakPosition(time);
     setBreakTimer(Number(time) * 60);
@@ -249,16 +206,13 @@ const PomodoroMode: React.FC = () => {
     <Card className='inline-flex flex-col items-center justify-center gap-4 border-4 border-blue-500'>
       {!breakMode ? (
         <>
-          {/*Pomodoro Zen Mode */}
           <h3>Pomodoro Zen Mode</h3>
           <Image className='w-20' alt='profile-pic' src={profilePicture} />
-          {/*White Timer Display */}
           <h3 className='flex w-28 justify-center bg-white px-20 py-7 text-3xl font-thin tracking-wider text-black'>
             {Math.floor(timer / 60)}:
             {timer % 60 < 10 ? '0' + (timer % 60) : timer % 60}
           </h3>
 
-          {/*Progress Bar */}
           <div className='flex flex-col gap-y-4'>
             <Progress className='w-96' value={value} />
             <h2 className='2-xl self-center'>{value.toFixed(2)} %</h2>
@@ -266,7 +220,6 @@ const PomodoroMode: React.FC = () => {
 
           <div className='flex flex-col gap-y-5'>
             <div className='flex gap-x-5'>
-              {/*Button to start/end timer*/}
               <Button
                 className={isCountingDown ? 'bg-slate-50' : 'bg-green-500'}
                 onClick={toggleTimer}
@@ -409,8 +362,6 @@ const PomodoroMode: React.FC = () => {
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
-
-            {/*Button to go back to Arc Timer*/}
             <Button
               className='bg-blue-500'
               onClick={() => redirect('./arc-timer')}
@@ -418,7 +369,6 @@ const PomodoroMode: React.FC = () => {
               Back to Arc Timer Page
             </Button>
           </div>
-          {/*Pomodoro Dialog */}
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild></DialogTrigger>
             <DialogContent className='sm:max-w-md'>
@@ -455,15 +405,12 @@ const PomodoroMode: React.FC = () => {
         </>
       ) : (
         <>
-          {/*Break Mode View */}
           <h3>Break Mode</h3>
           <Image className='w-20' alt='profile-pic' src={profilePicture} />
-          {/*White Timer Display */}
           <h3 className='flex w-28 justify-center bg-white px-20 py-7 text-3xl font-thin tracking-wider text-black'>
             {Math.floor(breakTimer / 60)}:
             {breakTimer % 60 < 10 ? '0' + (breakTimer % 60) : breakTimer % 60}
           </h3>
-          {/*Button to start/end break */}
           <div className='flex gap-x-4'>
             <Button
               className={breakIsCountingDown ? 'bg-slate-50' : 'bg-green-500'}
@@ -476,7 +423,6 @@ const PomodoroMode: React.FC = () => {
               Skip Break
             </Button>
           </div>
-          {/*Break Dialog */}
           <Dialog open={breakDisplay} onOpenChange={setBreakDisplay}>
             <DialogTrigger asChild></DialogTrigger>
             <DialogContent className='sm:max-w-md'>
