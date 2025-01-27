@@ -15,18 +15,52 @@ import {
   DialogClose,
   DialogFooter,
 } from '@/components/shadcn-ui/dialog';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuGroup,
+  DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuTrigger,
+  DropdownMenuSubTrigger,
+  DropdownMenuPortal,
+  DropdownMenuSubContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+} from '@/components/shadcn-ui/dropdown';
 
 const PomodoroMode: React.FC = () => {
+  const DEFAULT_POMODORO_TIMER = 900;
+  const DEFAULT_BREAK_TIMER = 300;
+  const DEFAULT_LONG_BREAK_TIMER = 1200;
+
   const [isCountingDown, setIsCountingDown] = useState(false);
-  const [timer, setTimer] = useState(300);
-  const [initTimerValue, setInitTimerValue] = useState(300);
+  const [timer, setTimer] = useState(DEFAULT_POMODORO_TIMER);
+  const [initTimerValue, setInitTimerValue] = useState(DEFAULT_POMODORO_TIMER);
   const [open, setOpen] = useState(false);
 
   const [breakIsCountingDown, setBreakIsCountingDown] = useState(false);
-  const [breakTimer, setBreakTimer] = useState(300);
+  const [breakTimer, setBreakTimer] = useState(DEFAULT_BREAK_TIMER);
+  const [breakInitTimerValue, setBreakInitTimerValue] =
+    useState(DEFAULT_BREAK_TIMER);
+
   const [breakDisplay, setBreakDisplay] = useState(false);
   const [breakDisable, setBreakDisable] = useState(false);
   const [breakMode, setBreakMode] = useState(false);
+
+  const [position, setPosition] = React.useState('15');
+  const [breakPosition, setBreakPosition] = React.useState('5');
+
+  const [breakPositionLong, setBreakPositionLong] = React.useState('15');
+  const [breakTimerLong, setBreakTimerLong] = useState(
+    DEFAULT_LONG_BREAK_TIMER
+  );
+  const [breakInitTimerValueLong, setBreakInitTimerValueLong] = useState(
+    DEFAULT_LONG_BREAK_TIMER
+  );
+
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
     if (isCountingDown) {
@@ -38,11 +72,20 @@ const PomodoroMode: React.FC = () => {
             clearInterval(interval);
             setIsCountingDown(false);
             setTimer(initTimerValue);
+            setBreakMode(true);
+            if (count % 4 == 0) {
+              setBreakTimer(breakInitTimerValueLong);
+              setCount(0);
+            }
             return 0;
           }
         });
       }, 1000);
       return () => clearInterval(interval);
+    } else {
+      /*Set Count so it increments correctly */
+      setCount((prev) => prev + 1);
+      console.log(count);
     }
   }, [isCountingDown]);
 
@@ -54,7 +97,10 @@ const PomodoroMode: React.FC = () => {
             return prev - 1;
           } else {
             clearInterval(interval);
-            setBreakTimer(300);
+            setBreakTimer(breakInitTimerValue);
+            setBreakMode(false);
+            setBreakIsCountingDown(false);
+            setBreakDisable(false);
             return 0;
           }
         });
@@ -73,50 +119,88 @@ const PomodoroMode: React.FC = () => {
 
   let value = 100 - (timer / initTimerValue) * 100;
 
-  function handleTime(adjustment: number) {
-    setTimer(Math.max(300, Math.min(timer + adjustment, 7200)));
-    setInitTimerValue(
-      Math.max(300, Math.min(initTimerValue + adjustment, 7200))
-    );
-  }
-
   function endTimer() {
     setOpen(false);
     setTimer(initTimerValue);
     setInitTimerValue(initTimerValue);
     setIsCountingDown(false);
+    if (count > 0) {
+      setCount((prev) => prev - 1);
+    }
   }
 
   function continueTimer() {
-    setOpen(false);
-    setIsCountingDown(true);
+    if (timer == 0) {
+      setOpen(false);
+      setTimer(initTimerValue);
+      setInitTimerValue(initTimerValue);
+      setIsCountingDown(false);
+    } else {
+      setOpen(false);
+      setIsCountingDown(true);
+    }
   }
 
   function endTimerBreak() {
-    setBreakTimer(300);
-    setBreakIsCountingDown(false);
+    if (breakTimer == 0) {
+      setBreakDisplay(false);
+      setBreakTimer(breakInitTimerValue);
+    } else {
+      setBreakIsCountingDown(false);
+      setBreakDisplay(false);
+      setBreakTimer(breakInitTimerValue);
+      setBreakMode((prev) => !prev);
+      setBreakDisable(false);
+    }
+  }
+
+  function toggleTimerBreak() {
     setBreakDisplay(false);
-    setBreakDisable(true);
+    setBreakIsCountingDown((prev) => !prev);
+  }
+
+  function toggleTimer() {
+    setIsCountingDown((prev) => !prev);
   }
 
   function continueTimerBreak() {
-    setBreakDisplay(false);
-  }
-
-  function returnToPomodoro() {
-    setBreakMode((prev) => !prev);
-    setBreakDisable(false);
-    setBreakTimer(300);
-    setBreakIsCountingDown(false);
+    if (breakTimer == 0) {
+      setBreakDisplay(false);
+      setBreakTimer(breakInitTimerValue);
+      setBreakInitTimerValue(breakInitTimerValue);
+      setBreakIsCountingDown(false);
+    } else {
+      setBreakDisplay(false);
+      setBreakIsCountingDown(false);
+    }
   }
 
   const breakHandleToggle = () => {
-    if (breakIsCountingDown) {
-      setBreakDisplay(true);
-    } else {
-      setBreakIsCountingDown((prev) => !prev);
+    setBreakDisplay(true);
+    if (breakTimer == 0) {
+      setBreakTimer(breakInitTimerValue);
+      setBreakInitTimerValue(breakInitTimerValue);
+      setBreakIsCountingDown(false);
     }
   };
+
+  function pomodoroDuration(time: string) {
+    setPosition(time);
+    setTimer(Number(time) * 60);
+    setInitTimerValue(Number(time) * 60);
+  }
+
+  function breakDuration(time: string) {
+    setBreakPosition(time);
+    setBreakTimer(Number(time) * 60);
+    setBreakInitTimerValue(Number(time) * 60);
+  }
+
+  function breakDurationLong(time: string) {
+    setBreakPositionLong(time);
+    setBreakTimerLong(Number(time) * 60);
+    setBreakInitTimerValueLong(Number(time) * 60);
+  }
 
   return (
     <Card className='inline-flex flex-col items-center justify-center gap-4 border-4 border-blue-500'>
@@ -124,23 +208,6 @@ const PomodoroMode: React.FC = () => {
         <>
           <h3>Pomodoro Zen Mode</h3>
           <Image className='w-20' alt='profile-pic' src={profilePicture} />
-          <div className='flex gap-4'>
-            <Button
-              disabled={isCountingDown ? true : false}
-              className='h-24 w-24 bg-red-500'
-              onClick={() => handleTime(-300)}
-            >
-              -
-            </Button>
-            <Button
-              disabled={isCountingDown ? true : false}
-              className='h-24 w-24 bg-green-500'
-              onClick={() => handleTime(+300)}
-            >
-              +
-            </Button>
-          </div>
-
           <h3 className='flex w-28 justify-center bg-white px-20 py-7 text-3xl font-thin tracking-wider text-black'>
             {Math.floor(timer / 60)}:
             {timer % 60 < 10 ? '0' + (timer % 60) : timer % 60}
@@ -151,26 +218,157 @@ const PomodoroMode: React.FC = () => {
             <h2 className='2-xl self-center'>{value.toFixed(2)} %</h2>
           </div>
 
-          <Button
-            className={isCountingDown ? 'bg-red-500' : 'bg-green-500'}
-            onClick={handleToggle}
-          >
-            {isCountingDown ? 'End Timer' : 'Start Timer'}
-          </Button>
-
-          <Button
-            disabled={isCountingDown ? true : false}
-            onClick={() => setBreakMode((prev) => !prev)}
-          >
-            Break Mode
-          </Button>
-
-          <Button
-            className='bg-blue-500'
-            onClick={() => redirect('./arc-timer')}
-          >
-            Back to Regular
-          </Button>
+          <div className='flex flex-col gap-y-5'>
+            <div className='flex gap-x-5'>
+              <Button
+                className={isCountingDown ? 'bg-slate-50' : 'bg-green-500'}
+                onClick={toggleTimer}
+              >
+                {isCountingDown ? 'Pause' : 'Start'}
+              </Button>
+              <Button
+                className={'bg-red-500'}
+                onClick={handleToggle}
+                disabled={!isCountingDown ? true : false}
+              >
+                End Timer
+              </Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger
+                  disabled={isCountingDown ? true : false}
+                  className={
+                    isCountingDown
+                      ? 'rounded-lg bg-orange-900 p-2 text-sm text-black'
+                      : 'rounded-lg bg-orange-500 p-2 text-sm text-black'
+                  }
+                >
+                  Set Timer
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuGroup>
+                    <DropdownMenuSub>
+                      <DropdownMenuSubTrigger>
+                        Set Pomodoro Time
+                      </DropdownMenuSubTrigger>
+                      <DropdownMenuPortal>
+                        <DropdownMenuSubContent>
+                          <DropdownMenuRadioGroup
+                            value={position}
+                            onValueChange={setPosition}
+                          >
+                            <DropdownMenuRadioItem
+                              value={'15'}
+                              onClick={() => pomodoroDuration('15')}
+                            >
+                              15 minutes
+                            </DropdownMenuRadioItem>
+                            <DropdownMenuRadioItem
+                              value={'20'}
+                              onClick={() => pomodoroDuration('20')}
+                            >
+                              20 minutes
+                            </DropdownMenuRadioItem>
+                            <DropdownMenuRadioItem
+                              value={`25`}
+                              onClick={() => pomodoroDuration('25')}
+                            >
+                              25 minutes
+                            </DropdownMenuRadioItem>
+                            <DropdownMenuRadioItem
+                              value={`30`}
+                              onClick={() => pomodoroDuration('30')}
+                            >
+                              30 minutes
+                            </DropdownMenuRadioItem>
+                            <DropdownMenuRadioItem
+                              value={`45`}
+                              onClick={() => pomodoroDuration('45')}
+                            >
+                              45 minutes
+                            </DropdownMenuRadioItem>
+                            <DropdownMenuRadioItem
+                              value={`60`}
+                              onClick={() => pomodoroDuration('60')}
+                            >
+                              60 minutes
+                            </DropdownMenuRadioItem>
+                            <DropdownMenuRadioItem
+                              value={`90`}
+                              onClick={() => pomodoroDuration('90')}
+                            >
+                              90 minutes
+                            </DropdownMenuRadioItem>
+                          </DropdownMenuRadioGroup>
+                        </DropdownMenuSubContent>
+                      </DropdownMenuPortal>
+                    </DropdownMenuSub>
+                    <DropdownMenuSub>
+                      <DropdownMenuSubTrigger>
+                        Set Break Time
+                      </DropdownMenuSubTrigger>
+                      <DropdownMenuPortal>
+                        <DropdownMenuSubContent>
+                          <DropdownMenuItem disabled>
+                            Short Break
+                          </DropdownMenuItem>
+                          <DropdownMenuRadioGroup
+                            value={breakPosition}
+                            onValueChange={setBreakPosition}
+                          >
+                            <DropdownMenuRadioItem
+                              value={`5`}
+                              onClick={() => breakDuration('5')}
+                            >
+                              5 minutes
+                            </DropdownMenuRadioItem>
+                            <DropdownMenuRadioItem
+                              value={`10`}
+                              onClick={() => breakDuration('10')}
+                            >
+                              10 minutes
+                            </DropdownMenuRadioItem>
+                          </DropdownMenuRadioGroup>
+                          <DropdownMenuRadioGroup
+                            value={breakPositionLong}
+                            onValueChange={setBreakPositionLong}
+                          >
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem disabled>
+                              Long Break
+                            </DropdownMenuItem>
+                            <DropdownMenuRadioItem
+                              value={`15`}
+                              onClick={() => breakDurationLong('15')}
+                            >
+                              15 minutes
+                            </DropdownMenuRadioItem>
+                            <DropdownMenuRadioItem
+                              value={`20`}
+                              onClick={() => breakDurationLong('20')}
+                            >
+                              20 minutes
+                            </DropdownMenuRadioItem>
+                            <DropdownMenuRadioItem
+                              value={`30`}
+                              onClick={() => breakDurationLong('30')}
+                            >
+                              30 minutes
+                            </DropdownMenuRadioItem>
+                          </DropdownMenuRadioGroup>
+                        </DropdownMenuSubContent>
+                      </DropdownMenuPortal>
+                    </DropdownMenuSub>
+                  </DropdownMenuGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+            <Button
+              className='bg-blue-500'
+              onClick={() => redirect('./arc-timer')}
+            >
+              Back to Arc Timer Page
+            </Button>
+          </div>
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild></DialogTrigger>
             <DialogContent className='sm:max-w-md'>
@@ -213,17 +411,18 @@ const PomodoroMode: React.FC = () => {
             {Math.floor(breakTimer / 60)}:
             {breakTimer % 60 < 10 ? '0' + (breakTimer % 60) : breakTimer % 60}
           </h3>
-          <Button
-            className={breakIsCountingDown ? 'bg-red-500' : 'bg-green-500'}
-            onClick={breakHandleToggle}
-            disabled={breakDisable ? true : false}
-          >
-            {breakIsCountingDown ? 'End Break' : 'Start Break'}
-          </Button>
-
-          <Button className='bg-blue-500' onClick={returnToPomodoro}>
-            Back to Pomodoro Mode
-          </Button>
+          <div className='flex gap-x-4'>
+            <Button
+              className={breakIsCountingDown ? 'bg-slate-50' : 'bg-green-500'}
+              onClick={toggleTimerBreak}
+              disabled={breakDisable ? true : false}
+            >
+              {breakIsCountingDown ? 'Pause Break' : 'Start Break'}
+            </Button>
+            <Button className={'bg-indigo-500'} onClick={breakHandleToggle}>
+              Skip Break
+            </Button>
+          </div>
           <Dialog open={breakDisplay} onOpenChange={setBreakDisplay}>
             <DialogTrigger asChild></DialogTrigger>
             <DialogContent className='sm:max-w-md'>
